@@ -1,0 +1,19 @@
+import { ImageResponse } from "next/og";
+import { LOGO_PATH } from "@/lib/logo";
+
+export const size = { width: 180, height: 180 };
+export const contentType = "image/png";
+
+/** Home-screen icon for iPhone and iPad */
+export default function AppleIcon() {
+  return new ImageResponse(
+    (
+      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#0E0F11" }}>
+        <svg width="92" height="104" viewBox="0 0 316 359">
+          <path fill="#F2F0EB" fillRule="evenodd" d={LOGO_PATH} />
+        </svg>
+      </div>
+    ),
+    size,
+  );
+}

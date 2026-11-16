@@ -19,12 +19,12 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { openCart, cartCount } = useCart();
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
 
   return (
     <nav aria-label="Main" className="fixed inset-x-0 top-0 z-50 bg-graphite text-paper">
       <div className="wrap flex h-11 items-center justify-between">
-        <Link href="/" aria-label="Sentio" className="flex items-center gap-2 py-2" onClick={() => setOpen(false)}>
+        <Link href={localize("/")} aria-label="Sentio" className="flex items-center gap-2 py-2" onClick={() => setOpen(false)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/logo.svg" alt="" width={18} height={20} className="logo-mark h-5 w-auto" />
           <span className="text-[0.9375rem] font-medium tracking-tight">Sentio</span>
@@ -32,7 +32,7 @@ export default function Navbar() {
 
         <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           {navLinks.map((link) => (
-            <Link key={link.label} href={link.href} className="text-[0.8125rem] transition-opacity hover:opacity-60">
+            <Link key={link.label} href={localize(link.href)} className="text-[0.8125rem] transition-opacity hover:opacity-60">
               {t(link.label)}
             </Link>
           ))}
@@ -68,7 +68,7 @@ export default function Navbar() {
             {navLinks.map((link) => (
               <Link
                 key={link.label}
-                href={link.href}
+                href={localize(link.href)}
                 onClick={() => setOpen(false)}
                 className="rule py-4 text-[1.75rem] leading-tight tracking-tight"
               >

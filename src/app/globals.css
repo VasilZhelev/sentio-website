@@ -41,10 +41,6 @@ body {
 }
 
 /* Returning Bulgarian readers: wait for the translation instead of flashing English */
-.lang-wait body {
-  visibility: hidden;
-}
-
 /*
  * Light mode. Dark sections turn paper-white. Anything inside .keep-tone
  * (the hero, photography, the terrain panels) keeps its fixed colours.

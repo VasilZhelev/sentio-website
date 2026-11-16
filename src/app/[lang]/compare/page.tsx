@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { pageMetadata, toLang } from "@/lib/seo";
+import { breadcrumbSchema, productSchema } from "@/lib/schema";
+import JsonLd from "@/components/JsonLd";
+import { moto, snow } from "@/data/products";
+import L from "@/components/ui/L";
 import T from "@/components/ui/T";
 
-export const metadata: Metadata = {
-  title: "Compare Sentio Moto and Snow",
-  description: "Sentio Moto and Sentio Snow side by side: price, weight, battery, lens and protection.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  return pageMetadata("compare", toLang((await params).lang));
+}
 
 const shared = [
   "128×64 OLED HUD at 60 fps",
@@ -31,8 +34,12 @@ const rows = [
   { label: "HUD highlights", moto: "Speed, navigation, lap timer", snow: "Temperature, altitude, run mapping" },
 ];
 
-export default function ComparePage() {
+export default async function ComparePage({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = toLang((await params).lang);
+
   return (
+    <>
+      <JsonLd data={[breadcrumbSchema("compare", lang), productSchema(moto, lang), productSchema(snow, lang)]} />
     <div className="bg-paper text-graphite">
       <section className="wrap pb-12 pt-[calc(44px+12svh)] md:pb-16">
         <p className="hud-label text-ash"><T>Compare</T></p>
@@ -42,18 +49,18 @@ export default function ComparePage() {
       <section className="wrap pb-20 md:pb-32">
         <div className="sticky top-11 z-10 grid grid-cols-2 gap-x-5 bg-paper py-4 md:grid-cols-[1fr_1fr_1fr] md:gap-x-8">
           <span className="hidden md:block" />
-          <Link href="/moto" className="block">
+          <L href="/moto" className="block">
             <span
               className="block text-[clamp(1.5rem,3vw,2.75rem)] leading-none text-amber-deep"
               style={{ fontVariationSettings: '"wdth" 70, "wght" 780' }}
             ><T>Sentio Moto</T></span>
-          </Link>
-          <Link href="/snow" className="block">
+          </L>
+          <L href="/snow" className="block">
             <span
               className="block text-[clamp(1.5rem,3vw,2.75rem)] leading-none text-ice-deep"
               style={{ fontVariationSettings: '"wdth" 118, "wght" 280' }}
             ><T>Sentio Snow</T></span>
-          </Link>
+          </L>
         </div>
 
         <dl>
@@ -68,8 +75,8 @@ export default function ComparePage() {
 
         <div className="mt-6 grid grid-cols-2 gap-x-5 md:grid-cols-[1fr_1fr_1fr] md:gap-x-8">
           <span className="hidden md:block" />
-          <Link href="/moto" className="btn bg-amber text-graphite"><T>Explore Moto</T></Link>
-          <Link href="/snow" className="btn bg-graphite text-paper"><T>Explore Snow</T></Link>
+          <L href="/moto" className="btn bg-amber text-graphite"><T>Explore Moto</T></L>
+          <L href="/snow" className="btn bg-graphite text-paper"><T>Explore Snow</T></L>
         </div>
       </section>
 
@@ -88,5 +95,6 @@ export default function ComparePage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import L from "@/components/ui/L";
 import GroundedGoggle from "@/components/ui/GroundedGoggle";
 import Photo from "@/components/ui/Photo";
 import HudShowcase from "./HudShowcase";
@@ -18,7 +18,7 @@ export function Intro() {
         <div className="grid gap-y-12 md:grid-cols-12 md:gap-x-8">
           <div className="reveal md:col-span-5 md:pt-4">
             <h2 className="statement"><T>A display that disappears until you need it. Speed, navigation and crash detection, built into the goggle itself.</T></h2>
-            <Link href="/#technology" className="link-arrow mt-6"><T>How it works</T></Link>
+            <L href="/#technology" className="link-arrow mt-6"><T>How it works</T></L>
           </div>
           <div className="reveal md:col-span-4 md:col-start-6">
             <div className="aspect-[4/5]">
@@ -216,7 +216,7 @@ export function Editions() {
   return (
     <section className="keep-tone bg-paper md:flex">
       {editions.map((e, i) => (
-        <Link
+        <L
           key={e.name}
           href={e.href}
           className={`group relative block h-[78svh] overflow-hidden md:h-[92svh] md:w-[calc(50%+3.5vw)] ${
@@ -249,7 +249,7 @@ export function Editions() {
             <p className="text-xl tracking-tight">{e.price}</p>
             <span className="link-arrow"><T>Explore</T></span>
           </div>
-        </Link>
+        </L>
       ))}
     </section>
   );
@@ -295,7 +295,7 @@ export function Reviews() {
   );
 }
 
-const faqs = [
+export const faqs = [
   {
     q: "How long does the battery last in extreme cold?",
     a: "Snow gives about 6 hours in heated anti-fog mode and 8+ in standard mode, thanks to a thermally insulated cell rated to -25°C. Moto runs for 8 hours. A full USB-C charge takes 90 minutes.",

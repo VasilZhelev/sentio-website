@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { pageMetadata, toLang } from "@/lib/seo";
+import { breadcrumbSchema } from "@/lib/schema";
+import JsonLd from "@/components/JsonLd";
+import L from "@/components/ui/L";
 import Photo from "@/components/ui/Photo";
 import T from "@/components/ui/T";
 
-export const metadata: Metadata = {
-  title: "About Sentio",
-  description: "Why we put a heads-up display inside a goggle, and what we refuse to compromise on.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  return pageMetadata("about", toLang((await params).lang));
+}
 
 const beliefs = [
   {
@@ -29,8 +31,12 @@ const numbers = [
   { value: "2,000", label: "Hours of rider feedback" },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = toLang((await params).lang);
+
   return (
+    <>
+      <JsonLd data={[breadcrumbSchema("about", lang)]} />
     <div className="bg-graphite text-paper">
       <section className="wrap pb-14 pt-[calc(44px+12svh)] md:pb-20">
         <p className="hud-label text-stone"><T>About Sentio</T></p>
@@ -79,9 +85,10 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-          <Link href="/compare" className="link-arrow mt-12"><T>Find your goggle</T></Link>
+          <L href="/compare" className="link-arrow mt-12"><T>Find your goggle</T></L>
         </div>
       </section>
     </div>
+    </>
   );
 }

@@ -43,6 +43,7 @@ export const bg: Record<string, string> = {
   "Sign up": "Запиши се",
 
   // Hero
+  "Sentio smart HUD goggles for motocross and skiing.": "Смарт HUD очила Sentio за мотокрос и ски.",
   "Vision meets instinct.": "Визия среща инстинкт.",
   "Two terrains.": "Два терена.",
   "One lens.": "Една леща.",

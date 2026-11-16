@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { pageMetadata, toLang } from "@/lib/seo";
+import { breadcrumbSchema, faqSchema } from "@/lib/schema";
+import JsonLd from "@/components/JsonLd";
+import L from "@/components/ui/L";
 import T from "@/components/ui/T";
 
-export const metadata: Metadata = {
-  title: "Sentio Support",
-  description: "Shipping, returns, warranty, charging and setup for your Sentio goggles.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  return pageMetadata("support", toLang((await params).lang));
+}
 
 const promises = [
   { mark: "Free", title: "Worldwide shipping", text: "Included on every pre-order." },
@@ -40,8 +42,12 @@ const topics = [
   },
 ];
 
-export default function SupportPage() {
+export default async function SupportPage({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = toLang((await params).lang);
+
   return (
+    <>
+      <JsonLd data={[breadcrumbSchema("support", lang), faqSchema(topics, lang)]} />
     <div className="bg-paper text-graphite">
       <section className="wrap pb-14 pt-[calc(44px+12svh)] md:pb-20">
         <p className="hud-label text-ash"><T>Support</T></p>
@@ -61,7 +67,7 @@ export default function SupportPage() {
         <div className="grid gap-y-8 md:grid-cols-12 md:gap-x-8">
           <div className="md:col-span-5">
             <h2 className="statement"><T>Setup and care</T></h2>
-            <Link href="/#questions" className="link-arrow mt-4"><T>More questions</T></Link>
+            <L href="/#questions" className="link-arrow mt-4"><T>More questions</T></L>
           </div>
           <div className="md:col-span-7">
             {topics.map((t) => (
@@ -112,5 +118,6 @@ export default function SupportPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

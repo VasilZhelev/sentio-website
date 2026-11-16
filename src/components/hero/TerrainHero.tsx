@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
+import L from "@/components/ui/L";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/components/LanguageContext";
 import type { TerrainState } from "./TerrainParticles";
@@ -262,7 +262,7 @@ export default function TerrainHero() {
   return (
     <section ref={section} aria-label="Sentio goggles" className="relative h-[215svh]">
       <div ref={stage} className="keep-tone sticky top-0 h-svh touch-pan-y select-none overflow-hidden bg-graphite">
-        <h1 className="sr-only">{t("Vision meets instinct.")}</h1>
+        <h1 className="sr-only">{t("Sentio smart HUD goggles for motocross and skiing.")} {t("Vision meets instinct.")}</h1>
 
         {/* Revealed when the terrains part */}
         <div className="pointer-events-none absolute inset-x-0 top-[66svh] px-6 text-center md:top-[69svh]">
@@ -341,20 +341,20 @@ export default function TerrainHero() {
           ref={corners}
           className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] md:p-8"
         >
-          <Link href="/moto" className="hud-label py-1 text-paper">
+          <L href="/moto" className="hud-label py-1 text-paper">
             Sentio Moto
             <br />
             {t("Motocross & Enduro")}
             <br />
             $349 →
-          </Link>
-          <Link href="/snow" className="hud-label py-1 text-right text-graphite">
+          </L>
+          <L href="/snow" className="hud-label py-1 text-right text-graphite">
             Sentio Snow
             <br />
             {t("Ski & Snowboard")}
             <br />
             $379 →
-          </Link>
+          </L>
         </div>
 
         <label className="sr-only focus-within:not-sr-only focus-within:absolute focus-within:left-1/2 focus-within:top-16 focus-within:-translate-x-1/2">

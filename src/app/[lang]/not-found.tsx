@@ -1,4 +1,4 @@
-import Link from "next/link";
+import L from "@/components/ui/L";
 import T from "@/components/ui/T";
 
 export default function NotFound() {
@@ -11,8 +11,8 @@ export default function NotFound() {
           <span style={{ fontVariationSettings: '"wdth" 122, "wght" 250' }}><T>trail.</T></span>
         </h1>
         <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2">
-          <Link href="/" className="link-arrow"><T>Back to the start</T></Link>
-          <Link href="/compare" className="link-arrow"><T>Compare goggles</T></Link>
+          <L href="/" className="link-arrow"><T>Back to the start</T></L>
+          <L href="/compare" className="link-arrow"><T>Compare goggles</T></L>
         </div>
       </div>
     </section>

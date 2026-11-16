@@ -1,52 +1,33 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, type ReactNode } from "react";
 import { bg } from "@/data/bg";
+import { localize as localizePath, type Lang } from "@/lib/seo";
 
-export type Lang = "en" | "bg";
+export type { Lang };
 
 type LanguageContextType = {
   lang: Lang;
-  setLang: (lang: Lang) => void;
   /** Returns the Bulgarian for an English string, or the English if there is none */
   t: (english: string) => string;
+  /** Turns "/moto" into "/bg/moto" on Bulgarian pages */
+  localize: (path: string) => string;
 };
 
 const LanguageContext = createContext<LanguageContextType>({
   lang: "en",
-  setLang: () => {},
   t: (english) => english,
+  localize: (path) => path,
 });
 
 export function useLanguage() {
   return useContext(LanguageContext);
 }
 
-export default function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
-
-  useEffect(() => {
-    let stored: string | null = null;
-    try {
-      stored = localStorage.getItem("sentio-lang");
-    } catch {}
-    if (stored === "bg") {
-      setLangState("bg");
-      document.documentElement.lang = "bg";
-    }
-    // The head script hides the page for returning Bulgarian readers until this point
-    document.documentElement.classList.remove("lang-wait");
-  }, []);
-
-  const setLang = useCallback((next: Lang) => {
-    setLangState(next);
-    document.documentElement.lang = next;
-    try {
-      localStorage.setItem("sentio-lang", next);
-    } catch {}
-  }, []);
-
+/** The language comes from the URL, so search engines see both versions */
+export default function LanguageProvider({ lang, children }: { lang: Lang; children: ReactNode }) {
   const t = useCallback((english: string) => (lang === "bg" ? (bg[english] ?? english) : english), [lang]);
+  const localize = useCallback((path: string) => localizePath(path, lang), [lang]);
 
-  return <LanguageContext.Provider value={{ lang, setLang, t }}>{children}</LanguageContext.Provider>;
+  return <LanguageContext.Provider value={{ lang, t, localize }}>{children}</LanguageContext.Provider>;
 }

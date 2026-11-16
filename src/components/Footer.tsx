@@ -26,7 +26,7 @@ const columns = [
 ];
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
 
   return (
     <footer id="updates" className="scroll-mt-11 bg-graphite text-paper">
@@ -58,7 +58,7 @@ export default function Footer() {
               <ul className="mt-4">
                 {column.links.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} className="block py-1.5 text-[0.9375rem] transition-opacity hover:opacity-60">
+                    <Link href={localize(link.href)} className="block py-1.5 text-[0.9375rem] transition-opacity hover:opacity-60">
                       {t(link.label)}
                     </Link>
                   </li>

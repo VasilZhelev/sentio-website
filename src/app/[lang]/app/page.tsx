@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata, toLang } from "@/lib/seo";
+import { breadcrumbSchema } from "@/lib/schema";
+import JsonLd from "@/components/JsonLd";
 import HudEditor from "@/components/product/HudEditor";
 import T from "@/components/ui/T";
 
-export const metadata: Metadata = {
-  title: "Sentio App | Your ride, your data",
-  description: "Sync rides, design your HUD and export video with telemetry overlays. Free, with no subscription.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  return pageMetadata("app", toLang((await params).lang));
+}
 
 const stats = [
   { value: "BLE 5.0", label: "Real-time sync" },
@@ -21,8 +23,12 @@ const video = [
   { title: "Share sessions", text: "Send a link to an interactive 3D map of your ride. Cloud backup is free." },
 ];
 
-export default function AppPage() {
+export default async function AppPage({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = toLang((await params).lang);
+
   return (
+    <>
+      <JsonLd data={[breadcrumbSchema("app", lang)]} />
     <div className="bg-graphite text-paper">
       <section className="wrap pb-16 pt-[calc(44px+14svh)] md:pb-24">
         <p className="hud-label text-stone"><T>Sentio App · iOS 15+ and Android 12+</T></p>
@@ -67,5 +73,6 @@ export default function AppPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
